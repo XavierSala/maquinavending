@@ -23,6 +23,10 @@ public class DipositBegudes {
     String nomBeguda;
     float preuBeguda;
     int capacitatDiposit;
+
+    /**
+     * Llista que conté les begudes del dipòsit
+     */
     List<Beguda> begudes;
     
     /**
@@ -60,6 +64,22 @@ public class DipositBegudes {
         capacitatDiposit = CAPACITATDIPOSITDEFECTE;
         begudes = new ArrayList<Beguda>();        
     }
+    
+    /**
+     * Aquesta funció seria l'equivalent de posar un dipòsit que ja té algunes
+     * begudes posades
+     * @param beguda Tipus de begudes del dipòsit
+     * @param preu Preu de cada beguda
+     * @param capacitat capacitat del dipòsit
+     * @param b llista de begudes que ja estan a lloc
+     */
+    public DipositBegudes(String beguda, float preu, int capacitat, 
+            ArrayList<Beguda> b) {
+        begudes = b;
+        nomBeguda = beguda;
+        preuBeguda = preu;
+        capacitatDiposit = capacitat;
+    }
 
     /**
      * @return el nom de la beguda
@@ -72,7 +92,9 @@ public class DipositBegudes {
      * @param nomBeguda el nom de la beguda a posar
      */
     public void setNomBeguda(String nomBeguda) {
-        this.nomBeguda = nomBeguda;
+        if (nomBeguda != null) {
+            this.nomBeguda = nomBeguda;
+        }
     }
 
     /**
@@ -86,9 +108,26 @@ public class DipositBegudes {
      * @param preuBeguda el preu de la beguda a posar
      */
     public void setPreuBeguda(float preuBeguda) {
-        this.preuBeguda = preuBeguda;
+        if (preuBeguda>0) {
+            this.preuBeguda = preuBeguda;
+        }
     }
     
+    /**
+     * @return la quantitat de begudes del diposit
+     */
+    public int getCapacitatDiposit() {
+        return capacitatDiposit;
+    }
+
+    /**
+     * @param capacitatDiposit Defineix la quantitat de begudes
+     */
+    public void setCapacitatDiposit(int capacitatDiposit) {
+        if (capacitatDiposit < 0) {
+            this.capacitatDiposit = capacitatDiposit;
+        }
+    }
     
     /**
      * Comprova si el dipòsit està ple o no.
@@ -125,13 +164,22 @@ public class DipositBegudes {
         return resultatMaquina.OK;
     }
 
+    
+    /**
+     * Determina quantes begudes queden
+     * @return begudes en el dipòsit
+     */
+    public int quantesBegudesQueden() {
+        return begudes.size(); 
+    }
+    
     /**
      * Afegeix una beguda al dipòsit del tipus del dipòsit i de la capacitat
      * especificada. 
      * Només s'afegeix si té assignat algun tipus de beguda i sempre que no 
      * s'hagi superat la capacitat del dipòsit
      * @param capacitat
-     * @return Ha funcionat (1) o no ( 0: ple, -1: no iniciat )
+     * @return Com ha acabat la operació 
      */
     public resultatMaquina AfegirBeguda(int capacitat) {
         

@@ -136,7 +136,7 @@ public class MaquinaVending {
     */
    public resultatMaquina afegirDiposit(String tipus) {
        if (!isEnMarxa()) {
-           if (localitzarDiposit(tipus) != -1) {
+           if (localitzarDiposit(tipus) == -1) {
                diposits.add(new DipositBegudes(tipus));
                return resultatMaquina.OK;
            } else {
