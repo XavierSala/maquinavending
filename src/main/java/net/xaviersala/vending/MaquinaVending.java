@@ -73,6 +73,51 @@ public class MaquinaVending {
        return null;
    }
 
+   /** 
+    * Posa una beguda del tipus especificat de la màquina.
+    * @param quinaBeguda
+    * @return resultat de l'intent de posar la beguda
+    */
+   public int posarBeguda(String quinaBeguda) {       
+       int index = -1;
+       
+       if (enMarxa == true) {           
+           
+           // Localitzar en quin dipòsit s'ha de fer
+           index = localitzarDiposit(quinaBeguda);
+           if (index != -1) {  
+               // Treure la beguda si és possible             
+               return diposits.get(index).AfegirBeguda();          
+           }
+       }
+              
+       return -2;
+   }   
+   
+   
+   /** 
+    * Posa una beguda del tipus i la capacitat especificats a la màquina.
+    * @param quinaBeguda tipus de la beguda que es posa
+    * @param capacitat capacitat de la beguda posada
+    * @return resultat de l'intent de posar la beguda
+    */
+   public int posarBeguda(String quinaBeguda, int capacitat) {       
+       int index = -1;
+       
+       if (enMarxa == true) {           
+           
+           // Localitzar en quin dipòsit s'ha de fer
+           index = localitzarDiposit(quinaBeguda);
+           if (index != -1) {  
+               // Treure la beguda si és possible             
+               return diposits.get(index).AfegirBeguda(capacitat);          
+           }
+       }
+              
+       return -2;
+   }     
+   
+   
    /**
     * @return està enMarxa
     */

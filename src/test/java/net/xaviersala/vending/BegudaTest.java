@@ -54,10 +54,10 @@ public class BegudaTest {
     @Test
     public final void testGetSetDescripcio() {
         Beguda beure1 = new Beguda(); 
-        assertEquals("", beure1.getDescripcio());
+        assertEquals("Desconeguda", beure1.getDescripcio());
         
         beure1.setDescripcio("Aigua");                       
-        assertEquals("H2O2", beure1.getDescripcio());
+        assertEquals("Aigua", beure1.getDescripcio());
         
         beure1.setDescripcio("Suc de taronja");                   
         assertEquals("Suc de taronja", beure1.getDescripcio());
