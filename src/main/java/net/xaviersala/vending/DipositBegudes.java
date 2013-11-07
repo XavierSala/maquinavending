@@ -154,11 +154,11 @@ public class DipositBegudes {
     public resultatMaquina AfegirBeguda() {
         
         if (nomBeguda.equals("Desconegut")) {
-            return resultatMaquina.ERROR_DIPOSIT_SENSE_DESCRIPCIO;
+            return resultatMaquina.DIPOSIT_SENSE_DESCRIPCIO;
         }
         
         if (isDipositPle()) {
-            return resultatMaquina.ERROR_DIPOSIT_PLE;
+            return resultatMaquina.DIPOSIT_PLE;
         }
         begudes.add(new Beguda(nomBeguda));      
         return resultatMaquina.OK;
@@ -184,11 +184,11 @@ public class DipositBegudes {
     public resultatMaquina AfegirBeguda(int capacitat) {
         
         if (nomBeguda.equals("Desconegut")) {
-            return resultatMaquina.ERROR_DIPOSIT_SENSE_DESCRIPCIO;
+            return resultatMaquina.DIPOSIT_SENSE_DESCRIPCIO;
         }
         
         if (isDipositPle()) {
-            return resultatMaquina.ERROR_DIPOSIT_PLE;
+            return resultatMaquina.DIPOSIT_PLE;
         }
         begudes.add(new Beguda(nomBeguda, capacitat));      
         return resultatMaquina.OK;

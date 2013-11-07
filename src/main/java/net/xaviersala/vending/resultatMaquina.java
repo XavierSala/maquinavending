@@ -8,16 +8,14 @@ package net.xaviersala.vending;
  *
  */
 public enum resultatMaquina {
-
     
     OK(0), 
-    ERROR_JA_HI_ES(-1), 
-    ERROR_MAQUINA_EN_MARXA(-2), 
-    ERROR_MAQUINA_ATURADA(-3),
-    ERROR_DIPOSIT_SENSE_DESCRIPCIO(-4),
-    ERROR_DIPOSIT_REPETIT(-5),
-    ERROR_DIPOSIT_PLE(-6),
-    ERROR_NO_HI_ES(-7);
+    DIPOSIT_REPETIT(-1), 
+    MAQUINA_EN_MARXA(-2), 
+    MAQUINA_ATURADA(-3),
+    DIPOSIT_SENSE_DESCRIPCIO(-4),
+    DIPOSIT_INEXISTENT(-5),
+    DIPOSIT_PLE(-6);
     
     private int resultat;
     

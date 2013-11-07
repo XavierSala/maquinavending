@@ -16,32 +16,42 @@ public class MaquinaVendingTest {
 
     @Test
     public final void testPosarTreureBeguda() {
-        fail("Not yet implemented");
+        assertTrue(maquina.posarBeguda("Aigua") 
+                == resultatMaquina.DIPOSIT_INEXISTENT);
+                
     }
 
+    /**
+     * Comprovo el funcionament del sistema de gestió de dipòsits
+     */
     @Test
     public final void testGestioDiposits() {
         
         assertTrue(maquina.afegirDiposit("Aigua") == resultatMaquina.OK);
-        assertTrue(maquina.afegirDiposit("Aigua") == resultatMaquina.ERROR_JA_HI_ES);
+        assertTrue(maquina.afegirDiposit("Suc de Pinya") == resultatMaquina.OK);
+        assertTrue(maquina.afegirDiposit("Suc de Poma") == resultatMaquina.OK);
+        
+        assertTrue(maquina.afegirDiposit("Aigua") == resultatMaquina.DIPOSIT_REPETIT);
         
         assertTrue(maquina.afegirDiposit("Cervesa") == resultatMaquina.OK);
-        assertTrue(maquina.afegirDiposit("Cervesa") == resultatMaquina.ERROR_JA_HI_ES);
+        assertTrue(maquina.afegirDiposit("Cervesa") == resultatMaquina.DIPOSIT_REPETIT);
         
         assertTrue(maquina.treureDiposit("Aigua") == resultatMaquina.OK);
-        assertTrue(maquina.treureDiposit("Aigua") == resultatMaquina.ERROR_NO_HI_ES);
+        assertTrue(maquina.treureDiposit("Aigua") == resultatMaquina.DIPOSIT_INEXISTENT);
         
-        assertTrue(maquina.treureDiposit("Wisky") == resultatMaquina.ERROR_NO_HI_ES);
+        assertTrue(maquina.treureDiposit("Wisky") == resultatMaquina.DIPOSIT_INEXISTENT);
         
         maquina.setEnMarxa(true);
         
-        assertTrue(maquina.afegirDiposit("Vi") == resultatMaquina.ERROR_MAQUINA_EN_MARXA);
-        assertTrue(maquina.treureDiposit("Cerversa") == resultatMaquina.ERROR_MAQUINA_EN_MARXA);
+        assertTrue(maquina.afegirDiposit("Vi") == resultatMaquina.MAQUINA_EN_MARXA);
+        assertTrue(maquina.treureDiposit("Cerversa") == resultatMaquina.MAQUINA_EN_MARXA);
         
     }
 
 
-
+    /** 
+     * Comprovo el funcionament de la opció d'arrancar i aturar la màquina.
+     */
     @Test
     public final void testEnMarxa() {
         assertFalse(maquina.isEnMarxa());

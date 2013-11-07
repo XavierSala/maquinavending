@@ -91,10 +91,10 @@ public class MaquinaVending {
                retorn =  diposits.get(index).AfegirBeguda();          
            }
            else {
-               retorn = resultatMaquina.ERROR_DIPOSIT_REPETIT;
+               retorn = resultatMaquina.DIPOSIT_INEXISTENT;
            }
        } else {
-           retorn = resultatMaquina.ERROR_MAQUINA_EN_MARXA;
+           retorn = resultatMaquina.MAQUINA_EN_MARXA;
        }
               
        return retorn;
@@ -119,10 +119,10 @@ public class MaquinaVending {
                // Treure la beguda si és possible             
                return diposits.get(index).AfegirBeguda(capacitat);          
            } else {
-               retorn = resultatMaquina.ERROR_DIPOSIT_REPETIT;
+               retorn = resultatMaquina.DIPOSIT_INEXISTENT;
            }
        } else {
-           retorn = resultatMaquina.ERROR_MAQUINA_EN_MARXA;
+           retorn = resultatMaquina.MAQUINA_EN_MARXA;
        }
               
        return retorn;
@@ -140,11 +140,11 @@ public class MaquinaVending {
                diposits.add(new DipositBegudes(tipus));
                return resultatMaquina.OK;
            } else {
-               return resultatMaquina.ERROR_JA_HI_ES;
+               return resultatMaquina.DIPOSIT_REPETIT;
            }
        }
        else {
-           return resultatMaquina.ERROR_MAQUINA_EN_MARXA;
+           return resultatMaquina.MAQUINA_EN_MARXA;
        }
    }
    
@@ -165,11 +165,11 @@ public class MaquinaVending {
                diposits.remove(index);
                return resultatMaquina.OK;
            } else {
-               return resultatMaquina.ERROR_NO_HI_ES;
+               return resultatMaquina.DIPOSIT_INEXISTENT;
            }
        }
        else {
-           return resultatMaquina.ERROR_MAQUINA_EN_MARXA;
+           return resultatMaquina.MAQUINA_EN_MARXA;
        }       
    }
 
@@ -187,11 +187,11 @@ public class MaquinaVending {
                diposits.get(index).setPreuBeguda(preu);
                return resultatMaquina.OK;
            } else {
-               return resultatMaquina.ERROR_NO_HI_ES;
+               return resultatMaquina.DIPOSIT_INEXISTENT;
            }
        }
        else {
-           return resultatMaquina.ERROR_MAQUINA_EN_MARXA;
+           return resultatMaquina.MAQUINA_EN_MARXA;
        }
    }
    

@@ -69,7 +69,7 @@ public class DipositBegudesTest {
         assertEquals(resultatMaquina.OK, dipositBuit.AfegirBeguda());
         assertEquals(numBegudes+1, dipositBuit.quantesBegudesQueden());
         
-        assertEquals(resultatMaquina.ERROR_DIPOSIT_PLE, 
+        assertEquals(resultatMaquina.DIPOSIT_PLE, 
                 dipositPleAigua.AfegirBeguda());
         assertEquals(b.size(), dipositPleAigua.quantesBegudesQueden());
         
