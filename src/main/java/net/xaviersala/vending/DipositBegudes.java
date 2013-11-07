@@ -14,30 +14,7 @@ import java.util.List;
  *
  */
 public class DipositBegudes {
-    
-    /**
-     * Resultat de les operacions amb el dipòsit codificades amb valors
-     * 
-     * @author Xavier
-     *
-     */
-    enum resultatDiposit { 
-        
-        DIPOSITPLE(0), BEGUDAAFEGIDA(1), DIPOSITSENSEDESCRIPCIO(-1);
-        
-        private int resultat;
-        
-        resultatDiposit(int resultat) {
-            this.resultat = resultat;
-        }
-        
-        int getResultat() {
-            return resultat;
-        }
-    };
-
-    
-    
+   
     /**
      * Definim la capacitat per defecte
      */
@@ -135,17 +112,17 @@ public class DipositBegudes {
      * s'hagi superat la capacitat del dipòsit
      * @return Ha funcionat (1) o no ( 0: ple, -1: no iniciat )
      */
-    public int AfegirBeguda() {
+    public resultatMaquina AfegirBeguda() {
         
         if (nomBeguda.equals("Desconegut")) {
-            return resultatDiposit.DIPOSITSENSEDESCRIPCIO.getResultat();
+            return resultatMaquina.ERROR_DIPOSIT_SENSE_DESCRIPCIO;
         }
         
         if (isDipositPle()) {
-            return resultatDiposit.DIPOSITPLE.getResultat();
+            return resultatMaquina.ERROR_DIPOSIT_PLE;
         }
         begudes.add(new Beguda(nomBeguda));      
-        return resultatDiposit.BEGUDAAFEGIDA.getResultat();
+        return resultatMaquina.OK;
     }
 
     /**
@@ -156,17 +133,17 @@ public class DipositBegudes {
      * @param capacitat
      * @return Ha funcionat (1) o no ( 0: ple, -1: no iniciat )
      */
-    public int AfegirBeguda(int capacitat) {
+    public resultatMaquina AfegirBeguda(int capacitat) {
         
         if (nomBeguda.equals("Desconegut")) {
-            return resultatDiposit.DIPOSITSENSEDESCRIPCIO.getResultat();
+            return resultatMaquina.ERROR_DIPOSIT_SENSE_DESCRIPCIO;
         }
         
         if (isDipositPle()) {
-            return resultatDiposit.DIPOSITPLE.getResultat();
+            return resultatMaquina.ERROR_DIPOSIT_PLE;
         }
         begudes.add(new Beguda(nomBeguda, capacitat));      
-        return resultatDiposit.BEGUDAAFEGIDA.getResultat();
+        return resultatMaquina.OK;
     }
     
     /** 

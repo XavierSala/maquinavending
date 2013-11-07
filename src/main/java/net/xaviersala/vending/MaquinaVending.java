@@ -78,20 +78,26 @@ public class MaquinaVending {
     * @param quinaBeguda
     * @return resultat de l'intent de posar la beguda
     */
-   public int posarBeguda(String quinaBeguda) {       
+   public resultatMaquina posarBeguda(String quinaBeguda) {       
        int index = -1;
+       resultatMaquina retorn = resultatMaquina.OK;
        
-       if (enMarxa == true) {           
+       if (enMarxa == false) {           
            
            // Localitzar en quin dipòsit s'ha de fer
            index = localitzarDiposit(quinaBeguda);
            if (index != -1) {  
                // Treure la beguda si és possible             
-               return diposits.get(index).AfegirBeguda();          
+               retorn =  diposits.get(index).AfegirBeguda();          
            }
+           else {
+               retorn = resultatMaquina.ERROR_DIPOSIT_REPETIT;
+           }
+       } else {
+           retorn = resultatMaquina.ERROR_MAQUINA_EN_MARXA;
        }
               
-       return -2;
+       return retorn;
    }   
    
    
@@ -101,8 +107,9 @@ public class MaquinaVending {
     * @param capacitat capacitat de la beguda posada
     * @return resultat de l'intent de posar la beguda
     */
-   public int posarBeguda(String quinaBeguda, int capacitat) {       
+   public resultatMaquina posarBeguda(String quinaBeguda, int capacitat) {       
        int index = -1;
+       resultatMaquina retorn = resultatMaquina.OK;
        
        if (enMarxa == true) {           
            
@@ -111,13 +118,36 @@ public class MaquinaVending {
            if (index != -1) {  
                // Treure la beguda si és possible             
                return diposits.get(index).AfegirBeguda(capacitat);          
+           } else {
+               retorn = resultatMaquina.ERROR_DIPOSIT_REPETIT;
            }
+       } else {
+           retorn = resultatMaquina.ERROR_MAQUINA_EN_MARXA;
        }
               
-       return -2;
+       return retorn;
    }     
    
-   
+   /**
+    * Afegim un dipòsit del tipus que es rep a la màquina (només s'afegeix si
+    * el tipus no hi era i la màquina no està en funcionament)
+    * @param tipus tipus de dipòsit a afegir
+    * @return retorna com ha acabat la operació
+    */
+   public resultatMaquina afegirDiposit(String tipus) {
+       if (!isEnMarxa()) {
+           if (localitzarDiposit(tipus) != -1) {
+               diposits.add(new DipositBegudes(tipus));
+               return resultatMaquina.OK;
+           } else {
+               return resultatMaquina.ERROR_JA_HI_ES;
+           }
+       }
+       else {
+           return resultatMaquina.ERROR_MAQUINA_EN_MARXA;
+       }
+   }
+      
    /**
     * @return està enMarxa
     */
@@ -133,7 +163,11 @@ public class MaquinaVending {
        this.enMarxa = enMarxa;
    }   
    
-   
+   /**
+    * Localitza el dipòsit en el que hi ha la beguda especificada.
+    * @param quinaBeguda beguda que es busca
+    * @return retorna en quina posició està
+    */
     private int localitzarDiposit(String quinaBeguda) {
         int index = 0;
         
