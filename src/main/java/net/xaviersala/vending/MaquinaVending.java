@@ -147,6 +147,31 @@ public class MaquinaVending {
            return resultatMaquina.ERROR_MAQUINA_EN_MARXA;
        }
    }
+   
+   /**
+    * Treure de la màquina el dipòsit especificat.
+    * 
+    * Només es poden treure els dipòsits si la màquina està aturada
+    * 
+    * @param tipus descripció de la màquina que es vol treure
+    * @return
+    */
+   public resultatMaquina treureDiposit(String tipus) {
+       int index = -1;
+       
+       if (!isEnMarxa()) {
+           index = localitzarDiposit(tipus);
+           if (index != -1) {
+               diposits.remove(index);
+               return resultatMaquina.OK;
+           } else {
+               return resultatMaquina.ERROR_NO_HI_ES;
+           }
+       }
+       else {
+           return resultatMaquina.ERROR_MAQUINA_EN_MARXA;
+       }       
+   }
       
    /**
     * @return està enMarxa

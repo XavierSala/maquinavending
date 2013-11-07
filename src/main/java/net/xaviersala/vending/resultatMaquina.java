@@ -16,8 +16,8 @@ public enum resultatMaquina {
     ERROR_MAQUINA_ATURADA(-3),
     ERROR_DIPOSIT_SENSE_DESCRIPCIO(-4),
     ERROR_DIPOSIT_REPETIT(-5),
-    ERROR_DIPOSIT_PLE(-6)
-    ;
+    ERROR_DIPOSIT_PLE(-6),
+    ERROR_NO_HI_ES(-7);
     
     private int resultat;
     
