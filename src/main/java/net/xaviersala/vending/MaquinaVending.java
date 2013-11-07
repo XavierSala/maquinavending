@@ -172,7 +172,29 @@ public class MaquinaVending {
            return resultatMaquina.ERROR_MAQUINA_EN_MARXA;
        }       
    }
-      
+
+   /**
+    * Definir el preu d'una beguda.
+    * @param tipus tipus de dipòsit a afegir
+    * @param preu preu de la beguda del dipòsit
+    * @return retorna com ha acabat la operació
+    */
+   public resultatMaquina posarPreu(String tipus, float preu) {
+       int index=-1;
+       if (!isEnMarxa()) {
+           index = localitzarDiposit(tipus);
+           if (index != -1) {
+               diposits.get(index).setPreuBeguda(preu);
+               return resultatMaquina.OK;
+           } else {
+               return resultatMaquina.ERROR_NO_HI_ES;
+           }
+       }
+       else {
+           return resultatMaquina.ERROR_MAQUINA_EN_MARXA;
+       }
+   }
+   
    /**
     * @return està enMarxa
     */
