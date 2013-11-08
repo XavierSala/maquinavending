@@ -36,6 +36,24 @@ public class MaquinaVendingTest {
         assertTrue(maquina.posarBeguda("Cola") == resultatMaquina.OK);
         assertTrue(maquina.posarBeguda("Cervesa") == resultatMaquina.DIPOSIT_INEXISTENT);
         assertTrue(maquina.posarBeguda(null) == resultatMaquina.ERROR);
+        
+        // Ara permetrem als clients comprar...
+        
+        assertNull(maquina.treureBeguda("Aigua"));
+        
+        // Ai no! que no l'hem engegat ;-)        
+        maquina.setEnMarxa(true);
+        
+        // Buidar un dipòsit
+        assertNotNull(maquina.treureBeguda("Aigua"));
+        assertNotNull(maquina.treureBeguda("Aigua"));
+        assertNull(maquina.treureBeguda("Aigua"));
+        
+        // Treure una beguda que no hi és
+        assertNull(maquina.treureBeguda("Vi"));
+        
+        // Putejar el sistema ... 
+        assertNull(maquina.treureBeguda(null));
                 
     }
 
