@@ -2,22 +2,40 @@ package net.xaviersala.vending;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 
 public class MaquinaVendingTest {
 
     MaquinaVending maquina; 
+    ArrayList<DipositBegudes> diposits;
     
     @Before
     public void setUp() throws Exception {
         maquina = new MaquinaVending();
+        
     }
 
     @Test
     public final void testPosarTreureBeguda() {
+    	diposits = new ArrayList<DipositBegudes>();
+    	String [] tipusDiposits = { "Aigua", "Suc de taronja", "Cola" };
+        for(String textDiposit: tipusDiposits) {
+        	diposits.add(new DipositBegudes(textDiposit));
+        }
+    	
         assertTrue(maquina.posarBeguda("Aigua") 
                 == resultatMaquina.DIPOSIT_INEXISTENT);
+        // Creo els dipòsits per defecte. Aigua, Cola, Suc de Taronja
+        maquina = new MaquinaVending(diposits);
+        
+        assertTrue(maquina.posarBeguda("Aigua") == resultatMaquina.OK);
+        assertTrue(maquina.posarBeguda("Aigua") == resultatMaquina.OK);
+        assertTrue(maquina.posarBeguda("Cola") == resultatMaquina.OK);
+        assertTrue(maquina.posarBeguda("Cervesa") == resultatMaquina.DIPOSIT_INEXISTENT);
+        assertTrue(maquina.posarBeguda(null) == resultatMaquina.ERROR);
                 
     }
 
@@ -27,6 +45,7 @@ public class MaquinaVendingTest {
     @Test
     public final void testGestioDiposits() {
         
+    	assertTrue(maquina.afegirDiposit(null) == resultatMaquina.ERROR);
         assertTrue(maquina.afegirDiposit("Aigua") == resultatMaquina.OK);
         assertTrue(maquina.afegirDiposit("Suc de Pinya") == resultatMaquina.OK);
         assertTrue(maquina.afegirDiposit("Suc de Poma") == resultatMaquina.OK);
@@ -36,6 +55,7 @@ public class MaquinaVendingTest {
         assertTrue(maquina.afegirDiposit("Cervesa") == resultatMaquina.OK);
         assertTrue(maquina.afegirDiposit("Cervesa") == resultatMaquina.DIPOSIT_REPETIT);
         
+        assertTrue(maquina.treureDiposit(null) == resultatMaquina.ERROR);
         assertTrue(maquina.treureDiposit("Aigua") == resultatMaquina.OK);
         assertTrue(maquina.treureDiposit("Aigua") == resultatMaquina.DIPOSIT_INEXISTENT);
         

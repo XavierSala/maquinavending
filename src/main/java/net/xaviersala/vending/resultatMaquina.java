@@ -15,7 +15,8 @@ public enum resultatMaquina {
     MAQUINA_ATURADA(-3),
     DIPOSIT_SENSE_DESCRIPCIO(-4),
     DIPOSIT_INEXISTENT(-5),
-    DIPOSIT_PLE(-6);
+    DIPOSIT_PLE(-6),
+    ERROR(-10);
     
     private int resultat;
     

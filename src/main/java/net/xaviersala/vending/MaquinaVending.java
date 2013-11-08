@@ -51,6 +51,15 @@ public class MaquinaVending {
        saldo = 0;
    }
    
+   /**
+    * Creació d'una màquina de vending amb dipòsits.
+    * @param llista amb els dipòsits amb els que s'ha de crear la màquina
+    */
+   public MaquinaVending(List<DipositBegudes> diposits) {
+	   this.diposits = diposits;
+	   saldo = 0;
+   }
+   
    /** 
     * Treu una beguda del tipus especificat de la màquina
     * @param quinaBeguda
@@ -58,6 +67,10 @@ public class MaquinaVending {
     */
    public Beguda treureBeguda(String quinaBeguda) {       
        int index = -1;
+       
+       if (quinaBeguda == null) {
+    	   return null;
+       }
        
        if (enMarxa == true) {
            // Comprovar saldo
@@ -80,6 +93,10 @@ public class MaquinaVending {
     */
    public resultatMaquina posarBeguda(String quinaBeguda) {       
        int index = -1;
+       if (quinaBeguda == null) {
+    	   return resultatMaquina.ERROR;
+       }
+       
        resultatMaquina retorn = resultatMaquina.OK;
        
        if (enMarxa == false) {           
@@ -109,6 +126,9 @@ public class MaquinaVending {
     */
    public resultatMaquina posarBeguda(String quinaBeguda, int capacitat) {       
        int index = -1;
+       if (quinaBeguda == null) {
+    	   return resultatMaquina.ERROR;
+       }       
        resultatMaquina retorn = resultatMaquina.OK;
        
        if (enMarxa == true) {           
@@ -135,6 +155,10 @@ public class MaquinaVending {
     * @return retorna com ha acabat la operació
     */
    public resultatMaquina afegirDiposit(String tipus) {
+       if (tipus == null) {
+    	   return resultatMaquina.ERROR;
+       }
+       
        if (!isEnMarxa()) {
            if (localitzarDiposit(tipus) == -1) {
                diposits.add(new DipositBegudes(tipus));
@@ -156,9 +180,12 @@ public class MaquinaVending {
     * @param tipus descripció de la màquina que es vol treure
     * @return
     */
-   public resultatMaquina treureDiposit(String tipus) {
+   public resultatMaquina treureDiposit(String tipus) {	   
        int index = -1;
        
+       if (tipus == null) {
+    	   return resultatMaquina.ERROR;
+       }
        if (!isEnMarxa()) {
            index = localitzarDiposit(tipus);
            if (index != -1) {
@@ -180,7 +207,12 @@ public class MaquinaVending {
     * @return retorna com ha acabat la operació
     */
    public resultatMaquina posarPreu(String tipus, float preu) {
+	   
        int index=-1;
+       if (tipus == null) {
+    	   return resultatMaquina.ERROR;
+       }
+       
        if (!isEnMarxa()) {
            index = localitzarDiposit(tipus);
            if (index != -1) {
