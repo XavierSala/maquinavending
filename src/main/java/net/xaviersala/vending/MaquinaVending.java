@@ -27,12 +27,13 @@ public class MaquinaVending {
    /**
    * Llista dels dipòsits de begudes disponibles.
    */
-   List<DipositBegudes> diposits;
+   List<Diposit<Beguda>> dipositsBegudes;
+   List<Diposit<Moneda>> dipositsMonedes;
    
    /** 
     * Monedes que han entrat.
     */
-   int saldo; 
+   float saldo; 
    
    /**
     * Determina si la màquina està en marxa o no.
@@ -47,7 +48,7 @@ public class MaquinaVending {
     * Creació d'una màquina de vending
     */
    public MaquinaVending() {
-       diposits = new ArrayList<DipositBegudes>();
+       dipositsBegudes = new ArrayList<Diposit<Beguda>>();
        saldo = 0;
    }
    
@@ -55,8 +56,8 @@ public class MaquinaVending {
     * Creació d'una màquina de vending amb dipòsits.
     * @param llista amb els dipòsits amb els que s'ha de crear la màquina
     */
-   public MaquinaVending(List<DipositBegudes> diposits) {
-	   this.diposits = diposits;
+   public MaquinaVending(List<Diposit<Beguda>> diposits) {
+	   this.dipositsBegudes = diposits;
 	   saldo = 0;
    }
    
@@ -78,15 +79,84 @@ public class MaquinaVending {
            // Localitzar en quin dipòsit s'ha de fer
            index = localitzarDiposit(quinaBeguda);
            if (index != -1) {  
-               // Treure la beguda si és possible             
-               return diposits.get(index).TreuBeguda();               
+               // Treure la beguda si és possible  
+        	   float preuBeguda = dipositsBegudes.get(index).getValor();
+        	   if (saldo >= preuBeguda) {
+        		   saldo = saldo - preuBeguda;
+        		   return dipositsBegudes.get(index).Treu();
+        	   }         	   
            }
        }
               
        return null;
    }
-
+   
    /** 
+    * Tornar monedes per valor de les que ha posat
+    * @return Llista de monedes retornades
+    */
+   public List<Moneda> cancelarCompra() {
+	   return tornarMonedes(saldo);
+   }
+   
+   /**
+    * Tornar les monedes especificades.
+    * @param valor quantitat a tornar
+    * @return Llista de monedes retornades
+    */
+   public List<Moneda> tornarMonedes(float valor) {
+	   List<Moneda> monedes = new ArrayList<Moneda>();
+	   
+	   // TODO: Falta fer-lo
+	   
+	   return monedes;
+   }
+   
+   /**
+    * Posar monedes
+    * @param moneda que posa
+    */
+   public resultatMaquina posarMoneda(Moneda m) {
+	   resultatMaquina retorn;
+	   
+	   if (m == null || enMarxa == false) {
+		   return resultatMaquina.ERROR;
+	   }
+	   
+	   // int index = localitzarDiposit(m.getValor())
+       if (enMarxa == false) {           
+            return resultatMaquina.MAQUINA_EN_MARXA;
+       }
+           // Localitzar en quin dipòsit s'ha de fer
+       int index = localitzarDiposit(m);
+       if (index != -1) {  
+               // posar la moneda si és possible             
+               retorn =  dipositsMonedes.get(index).Afegir(m);
+               if (retorn == resultatMaquina.OK) {
+            	   saldo = saldo + m.getValor();
+               }                       	         
+           }
+           else {
+               retorn = resultatMaquina.DIPOSIT_INEXISTENT;
+           }
+              
+       return retorn;	   
+   }
+   
+	private int localitzarDiposit(Moneda m) {
+		int index = 0;
+
+		for (Diposit<Moneda> moneda : dipositsMonedes) {
+			if (moneda.getNom().equals(m.getTipusMoneda())
+					&& moneda.getValor() == m.getValor() ) {
+				return index;
+			}
+			index++;
+		}
+		return -1;
+	}
+
+/** 
     * Posa una beguda del tipus especificat de la màquina.
     * @param quinaBeguda
     * @return resultat de l'intent de posar la beguda
@@ -105,7 +175,7 @@ public class MaquinaVending {
            index = localitzarDiposit(quinaBeguda);
            if (index != -1) {  
                // Treure la beguda si és possible             
-               retorn =  diposits.get(index).AfegirBeguda();          
+               retorn =  dipositsBegudes.get(index).Afegir(new Beguda(quinaBeguda));          
            }
            else {
                retorn = resultatMaquina.DIPOSIT_INEXISTENT;
@@ -137,7 +207,8 @@ public class MaquinaVending {
            index = localitzarDiposit(quinaBeguda);
            if (index != -1) {  
                // Treure la beguda si és possible             
-               return diposits.get(index).AfegirBeguda(capacitat);          
+        	    Beguda nova = new Beguda(quinaBeguda, capacitat);
+               return dipositsBegudes.get(index).Afegir(nova);          
            } else {
                retorn = resultatMaquina.DIPOSIT_INEXISTENT;
            }
@@ -161,7 +232,7 @@ public class MaquinaVending {
        
        if (!isEnMarxa()) {
            if (localitzarDiposit(tipus) == -1) {
-               diposits.add(new DipositBegudes(tipus));
+               dipositsBegudes.add(new Diposit<Beguda>(tipus));
                return resultatMaquina.OK;
            } else {
                return resultatMaquina.DIPOSIT_REPETIT;
@@ -189,7 +260,7 @@ public class MaquinaVending {
        if (!isEnMarxa()) {
            index = localitzarDiposit(tipus);
            if (index != -1) {
-               diposits.remove(index);
+               dipositsBegudes.remove(index);
                return resultatMaquina.OK;
            } else {
                return resultatMaquina.DIPOSIT_INEXISTENT;
@@ -216,7 +287,7 @@ public class MaquinaVending {
        if (!isEnMarxa()) {
            index = localitzarDiposit(tipus);
            if (index != -1) {
-               diposits.get(index).setPreuBeguda(preu);
+               dipositsBegudes.get(index).setValor(preu);
                return resultatMaquina.OK;
            } else {
                return resultatMaquina.DIPOSIT_INEXISTENT;
@@ -250,8 +321,8 @@ public class MaquinaVending {
     private int localitzarDiposit(String quinaBeguda) {
         int index = 0;
         
-        for(DipositBegudes diposit: diposits) {
-            if (diposit.getNomBeguda().equals(quinaBeguda)) {
+        for(Diposit<Beguda> diposit: dipositsBegudes) {
+            if (diposit.getNom().equals(quinaBeguda)) {
                 return index;
             }
             index++;

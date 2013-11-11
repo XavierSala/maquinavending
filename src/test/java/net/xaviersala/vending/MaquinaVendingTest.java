@@ -10,7 +10,7 @@ import org.junit.Test;
 public class MaquinaVendingTest {
 
     MaquinaVending maquina; 
-    ArrayList<DipositBegudes> diposits;
+    ArrayList<Diposit<Beguda>> diposits;
     
     @Before
     public void setUp() throws Exception {
@@ -20,10 +20,10 @@ public class MaquinaVendingTest {
 
     @Test
     public final void testPosarTreureBeguda() {
-    	diposits = new ArrayList<DipositBegudes>();
+    	diposits = new ArrayList<Diposit<Beguda>>();
     	String [] tipusDiposits = { "Aigua", "Suc de taronja", "Cola" };
         for(String textDiposit: tipusDiposits) {
-        	diposits.add(new DipositBegudes(textDiposit));
+        	diposits.add(new Diposit<Beguda>(textDiposit));
         }
     	
         assertTrue(maquina.posarBeguda("Aigua") 

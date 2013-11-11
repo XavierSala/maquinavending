@@ -9,8 +9,8 @@ import org.junit.Test;
 
 public class DipositBegudesTest {
     
-    DipositBegudes dipositBuit;
-    DipositBegudes dipositPleAigua;
+    Diposit<Beguda> dipositBuit;
+    Diposit<Beguda> dipositPleAigua;
     ArrayList<Beguda> b;
     Beguda begudeta;
 
@@ -18,36 +18,39 @@ public class DipositBegudesTest {
     public void setUp() throws Exception {
         begudeta = new Beguda("Aigua");
         
-        dipositBuit = new DipositBegudes();
+        dipositBuit = new Diposit<Beguda>();
         b = new ArrayList<Beguda>();
         b.add(new Beguda("Aigua"));
         b.add(begudeta);
         
-        dipositPleAigua = new DipositBegudes("Aigua", 0.9f, b.size(), b);
+        dipositPleAigua = new Diposit<Beguda>("Aigua", 0.9f, b.size(), b);
     }
 
     @Test
     public final void testSetGetNomBeguda() {
         
-        assertEquals("Desconeguda", dipositBuit.getNomBeguda());
+        assertEquals("Desconeguda", dipositBuit.getNom());
         
-        dipositBuit.setNomBeguda("Cola");
-        assertEquals("Cola", dipositBuit.getNomBeguda());
+        dipositBuit.setNom("Cola");
+        assertEquals("Cola", dipositBuit.getNom());
         
-        dipositBuit.setNomBeguda(null);
-        assertEquals("Cola", dipositBuit.getNomBeguda());
+        dipositBuit.setNom(null);
+        assertEquals("Cola", dipositBuit.getNom());
     }
 
+    /** 
+     * Comprovar el preu de la beguda
+     */
     @Test
-    public final void testGetSetPreuBeguda() {
+    public final void testGetSetValor() {
         
-        assertTrue(dipositBuit.getPreuBeguda() == 0);
+        assertTrue(dipositBuit.getValor() == 0);
 
-        dipositBuit.setPreuBeguda(2.5f);
-        assertTrue(dipositBuit.getPreuBeguda() == 2.5d);
+        dipositBuit.setValor(2.5f);
+        assertTrue(dipositBuit.getValor() == 2.5d);
 
-        dipositBuit.setPreuBeguda(-3);
-        assertTrue(dipositBuit.getPreuBeguda() == 2.5d);
+        dipositBuit.setValor(-3);
+        assertTrue(dipositBuit.getValor() == 2.5d);
 
     }
 
@@ -65,25 +68,25 @@ public class DipositBegudesTest {
 
     @Test
     public final void testAfegirBeguda() {
-        int numBegudes = dipositBuit.quantesBegudesQueden();
-        assertEquals(resultatMaquina.OK, dipositBuit.AfegirBeguda());
-        assertEquals(numBegudes+1, dipositBuit.quantesBegudesQueden());
+        int numBegudes = dipositBuit.quantQueda();
+        assertEquals(resultatMaquina.OK, dipositBuit.Afegir(begudeta));
+        assertEquals(numBegudes+1, dipositBuit.quantQueda());
         
         assertEquals(resultatMaquina.DIPOSIT_PLE, 
-                dipositPleAigua.AfegirBeguda());
-        assertEquals(b.size(), dipositPleAigua.quantesBegudesQueden());
+                dipositPleAigua.Afegir(new Beguda("Aigua")));
+        assertEquals(b.size(), dipositPleAigua.quantQueda());
         
     }
 
     @Test
     public final void testTreuBeguda() {
-        assertEquals(null, dipositBuit.TreuBeguda());
+        assertNull(dipositBuit.Treu());
         
         // Treure dues aigues, la segona ha de ser "begudeta"
-        Beguda resultat = dipositPleAigua.TreuBeguda();             
+        Beguda resultat = dipositPleAigua.Treu();             
         assertTrue(resultat != null);
         assertEquals("Aigua", resultat.getDescripcio());
-        assertSame(begudeta, dipositPleAigua.TreuBeguda());
+        assertSame(begudeta, dipositPleAigua.Treu());
     }
 
 
