@@ -23,7 +23,7 @@ public class DipositBegudesTest {
         b.add(new Beguda("Aigua"));
         b.add(begudeta);
         
-        dipositPleAigua = new Diposit<Beguda>("Aigua", 0.9f, b.size(), b);
+        dipositPleAigua = new Diposit<Beguda>("Aigua", 90, b.size(), b);
     }
 
     @Test
@@ -46,11 +46,11 @@ public class DipositBegudesTest {
         
         assertTrue(dipositBuit.getValor() == 0);
 
-        dipositBuit.setValor(2.5f);
-        assertTrue(dipositBuit.getValor() == 2.5d);
+        dipositBuit.setValor(250);
+        assertTrue(dipositBuit.getValor() == 250);
 
         dipositBuit.setValor(-3);
-        assertTrue(dipositBuit.getValor() == 2.5d);
+        assertTrue(dipositBuit.getValor() == 250);
 
     }
 
